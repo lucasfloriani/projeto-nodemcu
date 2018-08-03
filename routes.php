@@ -28,7 +28,10 @@
 
   // we're adding an entry for the new controller and its actions
   $controllers = array(
-    'pages' => ['home', 'error']
+    'pages' => ['home', 'error'],
+    'luminosidade' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete'],
+    'umidade' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete'],
+    'temperatura' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete']
   );
 
   // Se o controller que está no index.php estiver como chave dentro do array $controllers

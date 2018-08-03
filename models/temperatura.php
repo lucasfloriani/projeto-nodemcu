@@ -4,6 +4,14 @@ class Temperatura {
 	private $temperatura;
 	private $tempo;
 
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	public function getId() {
+		return $this->id;
+	}
+
 	public function getTemperatura() {
 		return $this->temperatura;
 	}
@@ -20,16 +28,57 @@ class Temperatura {
 		$this->tempo = $tempo;
 	}
 
-	public function __construct($temperatura, $tempo) {
-		parent::__construct();
-		$this->temperatura = $temperatura;
-		$this->tempo = $tempo;
+	/**
+	 * retrieveAll
+	 * ?controller=temperatura&action=retrieveAll
+	 */
+	public static function retrieveAll() {
+		$pdo = Db::getInstance();
+		$stmt = $pdo->query('SELECT * FROM temperatura');
+		$dados = [];
+
+		while ($row = $stmt->fetch()) {
+			$dados[] = [
+				'id' => $row['id'],
+				'temperatura' => $row['temperatura'],
+				'tempo' => $row['tempo']
+			];
+		}
+
+		return $dados;
 	}
 
-	/*
+	/**
+	 * retrieve
+	 * ?controller=temperatura&action=retrieve&id=1
+	 */
+	public static function retrieve($id) {
+		$pdo = Db::getInstance();
+		$sql = 'SELECT * FROM temperatura WHERE id = :id LIMIT 1';
+		$row = ['id' => $id];
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute($row);
+
+		$resultado = $stmt->fetch();
+
+		if(!$resultado) return false;
+
+		return [
+			'id' => $resultado['id'],
+			'temperatura' => $resultado['temperatura'],
+			'tempo' => $resultado['tempo']
+		];
+	}
+
+	/**
 	 * create
+	 * ?controller=temperatura&action=create&temperatura=5
 	 */
 	public function create() {
+		$this->temperatura = floatval($this->temperatura);
+		if($this->temperatura == 0) return false;
+
 		$pdo = Db::getInstance();
 		$sql = 'INSERT INTO temperatura SET temperatura=:temperatura, tempo=:tempo;';
 		$row = [
@@ -39,60 +88,20 @@ class Temperatura {
 
 		$status = $pdo->prepare($sql)->execute($row);
 
-		if ($status) {
-			$temperatura = $pdo->fetch();
-			return new Temperatura($temperatura['id'], $temperatura['temperatura'], $temperatura['tempo']);
-		}
+		if ($status) return $pdo->lastInsertId();
 
 		return false;
 	}
 
-	/*
-	 * retrieve
-	 */
-	public function retrieve($id) {
-		$pdo = Db::getInstance();
-		$sql = 'SELECT * FROM temperatura WHERE id = :id LIMIT 1';
-		$row = ['id' => intval($id)];
-
-		$status = $pdo->prepare($sql)->execute($row);
-		if ($status) {
-			$temperatura = $pdo->fetch();
-			return new Temperatura($temperatura['id'], $temperatura['temperatura'], $temperatura['tempo']);
-		}
-
-		return false;
-	}
-
-	/*
-	 * retrieveAll
-	 */
-	public function retrieveAll() {
-		$pdo = Db::getInstance();
-		$sql = 'SELECT * FROM temperatura';
-
-		$status = $pdo->prepare($sql)->execute();
-
-		if (!$status) {
-			return [];
-		}
-
-		$objects = [];
-		foreach ($pdo as $row) {
-			$objects = array_push($objects, array(
-				'id' => $row->getId(),
-				'temperatura' => $row->getTemperatura(),
-				'tempo' => $row->getTempo()
-			));
-		}
-
-		return $objects;
-	}
-
-	/*
-	 * retrieveAll
+	/**
+	 * update
+	 * ?controller=temperatura&action=update&id=1&temperatura=4
 	 */
 	public function update() {
+		if(!$this->retrieve($this->getId())) return false;
+		$this->setTemperatura(floatval($this->getTemperatura()));
+		if(!$this->getTemperatura()) return false;
+
 		$pdo = Db::getInstance();
 		$sql = 'UPDATE temperatura SET temperatura=:temperatura, tempo=:tempo WHERE id=:id;';
 		$row = [
@@ -104,14 +113,14 @@ class Temperatura {
 		return $pdo->prepare($sql)->execute($row);
 	}
 
-	/*
-	 * retrieveAll
+	/**
+	 * delete
+	 * ?controller=temperatura&action=delete&id=7
 	 */
-	public function delete() {
+	public static function delete($id) {
+		if(!Temperatura::retrieve($id)) return false;
 		$pdo = Db::getInstance();
-		$sql = 'DELETE FROM temperatura WHERE id=:id';
-		$row = ['id' => $this->id];
-
-		return $pdo->prepare($sql)->execute($where);
+		$row = ['id' => $id];
+		return $pdo->prepare('DELETE FROM temperatura WHERE id=:id')->execute($row);
 	}
 }
