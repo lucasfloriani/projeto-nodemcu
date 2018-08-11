@@ -4,9 +4,6 @@
 
     switch($controller) {
       case 'pages':
-        require_once('models/luminosidade.php');
-        require_once('models/umidade.php');
-        require_once('models/temperatura.php');
         $controller = new PagesController();
       break;
       case 'luminosidade':
@@ -21,6 +18,11 @@
         require_once('models/temperatura.php');
         $controller = new TemperaturaController();
       break;
+      case 'granja':
+        require_once('models/luminosidade.php');
+        require_once('models/umidade.php');
+        require_once('models/temperatura.php');
+        $controller = new GranjaController();
     }
 
     $controller->{ $action }();
@@ -31,7 +33,8 @@
     'pages' => ['home', 'error'],
     'luminosidade' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete'],
     'umidade' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete'],
-    'temperatura' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete']
+    'temperatura' => ['create', 'retrieve', 'retrieveAll', 'update', 'delete'],
+    'granja' => ['getGranjaLastInfo']
   );
 
   // Se o controller que está no index.php estiver como chave dentro do array $controllers

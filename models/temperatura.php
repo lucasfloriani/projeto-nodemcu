@@ -123,4 +123,26 @@ class Temperatura {
 		$row = ['id' => $id];
 		return $pdo->prepare('DELETE FROM temperatura WHERE id=:id')->execute($row);
 	}
+
+	/**
+	 * lastInfo
+	 * ?controller=luminosidade&action=lastInfo
+	 */
+	public static function lastInfo() {
+		$pdo = Db::getInstance();
+		$sql = "SELECT * FROM temperatura ORDER BY id DESC LIMIT 1";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+
+		$resultado = $stmt->fetch();
+
+		if(!$resultado) return false;
+
+		return [
+			'id' => $resultado['id'],
+			'temperatura' => $resultado['temperatura'],
+			'tempo' => $resultado['tempo']
+		];
+	}
 }

@@ -1,11 +1,3 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
-
 nav ul a,
 nav .brand-logo {
   color: #444;
@@ -25,9 +17,9 @@ p {
   height: auto;
   color: rgba(255,255,255,.9);
 }
-  .parallax-container .section {
-    width: 100%;
-  }
+.parallax-container .section {
+  width: 100%;
+}
 
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
@@ -54,4 +46,32 @@ p {
 
 footer.page-footer {
   margin: 0;
+}
+
+.card-custom-title:not(:last-child) {
+  margin-bottom: 0.8em !important;
+}
+
+.card-custom-title:last-child {
+  margin-bottom: 0 !important;
+}
+
+.rem-2 {
+  font-size: 2rem;
+}
+.rem-3 {
+  font-size: 3rem;
+}
+
+.menu {
+  margin-bottom: 20px;
+}
+
+.page-footer {
+  padding-top: 0;
+}
+
+.autor {
+  color: #093a35;
+  font-weight: bold;
 }
