@@ -5,7 +5,7 @@
      * ?controller=temperatura&action=retrieveAll
      */
     public function retrieveAll() {
-      Temperatura::retrieveAll();
+      echo json_encode(Temperatura::retrieveAll());
     }
 
     /**
@@ -13,7 +13,7 @@
      * ?controller=temperatura&action=retrieve&id=1
      */
     public function retrieve() {
-      Temperatura::retrieve($_GET['id']);
+      echo json_encode(Temperatura::retrieve($_GET['id']));
     }
 
     /**
@@ -22,13 +22,13 @@
      */
     public function create() {
       if (!isset($_GET['temperatura'])) {
-        return false;
+        echo json_encode("false");
       }
 
       $temperatura = new Temperatura();
       $temperatura->setTemperatura($_GET['temperatura']);
       $temperatura->setTempo(date('Y-m-d H:i:s', time()));
-      $temperatura->create();
+      echo json_encode($temperatura->create());
     }
 
     /**
@@ -38,18 +38,18 @@
     public function update() {
       $id = $_GET['id'];
       if (!isset($id)) {
-        return false;
+        echo json_encode("false");
       }
       $id = intval($id);
       if (!$id) {
-        return false;
+        echo json_encode("false");
       }
 
       $temperatura = new Temperatura();
       $temperatura->setId($id);
       $temperatura->setTemperatura($_GET['temperatura']);
       $temperatura->setTempo(date('Y-m-d H:i:s', time()));
-      $temperatura->update();
+      echo json_encode($temperatura->update());
     }
 
     /**
@@ -57,7 +57,7 @@
      * ?controller=temperatura&action=delete&id=7
      */
     public function delete() {
-      Temperatura::delete($_GET['id']);
+      echo json_encode(Temperatura::delete($_GET['id']));
     }
   }
 ?>

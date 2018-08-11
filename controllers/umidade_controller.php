@@ -5,7 +5,7 @@
      * ?controller=umidade&action=retrieveAll
      */
     public function retrieveAll() {
-      Umidade::retrieveAll();
+      echo json_encode(Umidade::retrieveAll());
     }
 
     /**
@@ -13,7 +13,7 @@
      * ?controller=umidade&action=retrieve&id=1
      */
     public function retrieve() {
-      Umidade::retrieve($_GET['id']);
+      echo json_encode(Umidade::retrieve($_GET['id']));
     }
 
     /**
@@ -22,13 +22,13 @@
      */
     public function create() {
       if (!isset($_GET['umidade'])) {
-        return false;
+        echo json_encode("false");
       }
 
       $umidade = new Umidade();
       $umidade->setUmidade($_GET['umidade']);
       $umidade->setTempo(date('Y-m-d H:i:s', time()));
-      $umidade->create();
+      echo json_encode($umidade->create());
     }
 
     /**
@@ -38,18 +38,18 @@
     public function update() {
       $id = $_GET['id'];
       if (!isset($id)) {
-        return false;
+        echo json_encode("false");
       }
       $id = intval($id);
       if (!$id) {
-        return false;
+        echo json_encode("false");
       }
 
       $umidade = new Umidade();
       $umidade->setId($id);
       $umidade->setUmidade($_GET['umidade']);
       $umidade->setTempo(date('Y-m-d H:i:s', time()));
-      $umidade->update();
+      echo json_encode($umidade->update());
     }
 
     /**
@@ -57,7 +57,7 @@
      * ?controller=umidade&action=delete&id=7
      */
     public function delete() {
-      Umidade::delete($_GET['id']);
+      echo json_encode(Umidade::delete($_GET['id']));
     }
   }
 ?>

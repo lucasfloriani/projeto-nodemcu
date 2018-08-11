@@ -35,9 +35,6 @@
   );
 
   // Se o controller que está no index.php estiver como chave dentro do array $controllers
-  echo '-----------';
-  echo $controller;
-  echo '-----------';
   if (array_key_exists($controller, $controllers)) {
     if (in_array($action, $controllers[$controller])) {
       call($controller, $action);

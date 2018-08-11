@@ -5,7 +5,7 @@
      * ?controller=luminosidade&action=retrieveAll
      */
     public function retrieveAll() {
-      Luminosidade::retrieveAll();
+      echo json_encode(Luminosidade::retrieveAll());
     }
 
     /**
@@ -13,7 +13,7 @@
      * ?controller=luminosidade&action=retrieve&id=1
      */
     public function retrieve() {
-      Luminosidade::retrieve($_GET['id']);
+      echo json_encode(Luminosidade::retrieve($_GET['id']));
     }
 
     /**
@@ -22,13 +22,13 @@
      */
     public function create() {
       if (!isset($_GET['luminosidade'])) {
-        return false;
+        echo json_encode("false");
       }
 
       $luminosidade = new Luminosidade();
       $luminosidade->setLuminosidade($_GET['luminosidade']);
       $luminosidade->setTempo(date('Y-m-d H:i:s', time()));
-      $luminosidade->create();
+      echo json_encode($luminosidade->create());
     }
 
     /**
@@ -38,18 +38,18 @@
     public function update() {
       $id = $_GET['id'];
       if (!isset($id)) {
-        return false;
+        echo json_encode("false");
       }
       $id = intval($id);
       if (!$id) {
-        return false;
+        echo json_encode("false");
       }
 
       $luminosidade = new Luminosidade();
       $luminosidade->setId($id);
       $luminosidade->setLuminosidade($_GET['luminosidade']);
       $luminosidade->setTempo(date('Y-m-d H:i:s', time()));
-      $luminosidade->update();
+      echo json_encode($luminosidade->update());
     }
 
     /**
@@ -57,7 +57,7 @@
      * ?controller=luminosidade&action=delete&id=7
      */
     public function delete() {
-      Luminosidade::delete($_GET['id']);
+      echo json_encode(Luminosidade::delete($_GET['id']));
     }
   }
 ?>
