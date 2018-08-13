@@ -57,10 +57,12 @@ footer.page-footer {
 }
 
 .rem-2 {
-  font-size: 2rem;
+  font-size: 2rem !important;
 }
 .rem-3 {
-  font-size: 3rem;
+  font-size: 3rem !important;
+  line-height: 1 !important;
+  margin-bottom: 25px !important;
 }
 
 .menu {
