@@ -18,6 +18,8 @@
 								"tempo TIMESTAMP NOT NULL" .
 						");";
 
+		// Query para criar as n granjas
+
 		$pdo->prepare($sql)->execute();
 	}
 ?>

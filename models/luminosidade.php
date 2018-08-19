@@ -127,6 +127,7 @@ class Luminosidade {
 	/**
 	 * lastInfo
 	 * ?controller=luminosidade&action=lastInfo
+	 * // ?controller=luminosidade&action=lastInfo&granjaid=1
 	 */
 	public static function lastInfo() {
 		$pdo = Db::getInstance();

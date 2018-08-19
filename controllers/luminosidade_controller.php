@@ -19,15 +19,21 @@
     /**
      * create
      * ?controller=luminosidade&action=create&luminosidade=3
+     * // ?controller=luminosidade&action=create&luminosidade=3&granjaid=1
      */
     public function create() {
       if (!isset($_GET['luminosidade'])) {
         echo json_encode("false");
       }
+      // Como alterar relacionamento para n granjas
+      // if (!isset($_GET['granjaid'])) {
+      //   echo json_encode("false);
+      // }
 
       $luminosidade = new Luminosidade();
       $luminosidade->setLuminosidade($_GET['luminosidade']);
       $luminosidade->setTempo(date('Y-m-d H:i:s', time()));
+      // $luminosidade->setGranjaID(granjaid);
       echo json_encode($luminosidade->create());
     }
 
